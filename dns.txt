@@ -1,0 +1,56 @@
+Vm
+ sudo su -
+ dhclient enp0s3
+ ifconfig enp0s3
+
+
+Putty
+user and pass
+sudo su -
+dnf install httpd httpd-tools -y
+systemctl enable httpd
+systemctl start httpd
+systemctl status httpd
+sudo firewall-cmd --permanent --zone=public --add-service=http
+sudo firewall-cmd --permanent --zone=public --add-service=https
+sudo firewall-cmd --reload
+
+cd /var/www/html
+
+dnf install mariadb-server mariadb -y
+systemctl enable mariadb
+systemctl start mariadb
+systemctl status mariadb
+
+mysql -u root -p
+quit
+
+dnf install php php-opcache php-gd php-curl php-mysqlnd
+
+setsebool -P httpd_execmem 1
+systemctl restart httpd
+
+
+
+######
+cd /var/www/html
+
+mkdir ชื่อไฟล์ สร้างโฟร์เดอร์
+
+dnf install bind
+
+cd /var/named/
+vi /etc/named.conf   
+
+vi golfchaichalerm.com.db  
+vi 192.168.168.0.db   
+
+systemctl restart named
+
+
+
+named-checkzone golfchaichalerm.com golfchaichalerm.com.db  
+
+named-checkzone 168.168.192.in-addr.arpa 192.168.168.0.db
+
+vi /etc/resolv.conf
